@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const BouncyBoll = SpriteKind.create()
     export const Pet = SpriteKind.create()
     export const NPC = SpriteKind.create()
+    export const animal = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     hero.setImage(assets.image`snakyboi`)
@@ -52,12 +53,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.KOIN2, function (sprite, otherSp
     game.splash("YOU FOUND A COIN!")
     coins += 1
 })
-function ForestLvL01 () {
-    tiles.setCurrentTilemap(tilemap`level34`)
-    Beevah = sprites.create(assets.image`Beevah`, SpriteKind.NPC)
-    Beevah.setPosition(54, 58)
-    hero.setPosition(0, 0)
-}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     hero.setImage(assets.image`myImage`)
     animation.stopAnimation(animation.AnimationTypes.All, hero)
@@ -153,6 +148,12 @@ function Maze () {
     game.showLongText("Whatever you think adventurer! Lets Go!", DialogLayout.Bottom)
     scaling.scaleByPercent(hero, -35, ScaleDirection.Uniformly, ScaleAnchor.Middle)
 }
+function ForestLvL01 () {
+    tiles.setCurrentTilemap(tilemap`level34`)
+    Beevah = sprites.create(assets.image`Beevah`, SpriteKind.NPC)
+    Beevah.setPosition(54, 58)
+    hero.setPosition(0, 0)
+}
 function PETDIALOUGEDOGGYONE () {
     tiles.setCurrentTilemap(tilemap`level8`)
     doggy = sprites.create(img`
@@ -179,8 +180,8 @@ function PETDIALOUGEDOGGYONE () {
     tiles.setCurrentTilemap(tilemap`level21`)
     Maze()
 }
-let doggy: Sprite = null
 let Beevah: Sprite = null
+let doggy: Sprite = null
 let BouncyBoll2: Sprite = null
 let coins = 0
 let MYKOIN2: Sprite = null
@@ -191,6 +192,30 @@ game.splash("Welcome... Come and", "find some coins!")
 tiles.setCurrentTilemap(tilemap`level`)
 hero = sprites.create(assets.image`myImage0`, SpriteKind.Player)
 scene.cameraFollowSprite(hero)
+let sheep01 = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.animal)
+animation.runImageAnimation(
+sheep01,
+assets.animation`myAnim9`,
+200,
+true
+)
 hero.setPosition(5, 210)
 hero.setBounceOnWall(true)
 controller.moveSprite(hero, 100, 100)
@@ -239,3 +264,22 @@ assets.animation`myAnim`,
 500,
 true
 )
+forever(function () {
+    pause(randint(100, 5000))
+    animation.runImageAnimation(
+    sheep01,
+    assets.animation`myAnim9`,
+    150,
+    true
+    )
+    sheep01.setVelocity(randint(10, 50), randint(10, 50))
+    pause(randint(30, 100))
+    sheep01.setVelocity(0, 0)
+    animation.stopAnimation(animation.AnimationTypes.All, sheep01)
+    animation.runImageAnimation(
+    sheep01,
+    assets.animation`myAnim9`,
+    200,
+    true
+    )
+})
